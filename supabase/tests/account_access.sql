@@ -79,6 +79,15 @@ SELECT is((SELECT count(*) FROM public.messages),0::bigint,'superadmin cannot re
 SELECT ok(NOT has_table_privilege('authenticated','public.messages','TRUNCATE'),'direct truncate is forbidden');
 SELECT ok(NOT has_table_privilege('anon','public.users','TRIGGER'),'anonymous cannot attach security triggers');
 SELECT ok(NOT has_schema_privilege('authenticated','public','CREATE'),'clients cannot forge public security helpers');
+RESET ROLE;
+INSERT INTO public.roles(id,organization_id,code,name,is_active) VALUES('a3000000-0000-4000-8000-000000000004','a2000000-0000-4000-8000-000000000002','super_admin','Wrong partition role',true);
+INSERT INTO public.user_roles(user_id,role_id) VALUES('a1000000-0000-4000-8000-000000000003','a3000000-0000-4000-8000-000000000004');
+SET LOCAL ROLE authenticated;
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000003","role":"authenticated"}',true);
+SELECT ok(public.has_app_access(),'wrong scoped role does not remove legitimate member approval');
+SELECT ok(NOT public.is_super_admin(),'wrong scoped superadmin is not authoritative');
+SELECT ok(NOT public.is_org_admin('a2000000-0000-4000-8000-000000000001'::text),'legacy admin helper rejects wrong scoped superadmin');
+SELECT throws_ok($$SELECT public.list_app_accounts()$$,'42501',NULL,'wrong scoped role cannot review accounts');
 SELECT * FROM finish();
 ROLLBACK;
 
