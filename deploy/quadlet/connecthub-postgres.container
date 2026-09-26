@@ -1,0 +1,38 @@
+# ──────────────────────────────────────────────
+# ConnectHub — PostgreSQL 16 (Quadlet)
+# ──────────────────────────────────────────────
+# Rootless Podman systemd unit for PostgreSQL.
+# Place in: ~/.config/containers/systemd/connecthub-postgres.container
+# ──────────────────────────────────────────────
+
+[Unit]
+Description=ConnectHub PostgreSQL 16 Database
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/library/postgres:16-alpine
+ContainerName=connecthub-postgres
+Network=connecthub.network
+PublishPort=5432:5432
+Volume=postgres-data.volume:/var/lib/postgresql/data:Z
+
+# Environment — keep credentials in the root-owned environment file.
+EnvironmentFile=%h/.config/connecthub/connecthub.env
+Environment=POSTGRES_USER=connecthub
+Environment=POSTGRES_DB=connecthub
+Environment=PGDATA=/var/lib/postgresql/data/pgdata
+
+# Health check
+HealthCmd=pg_isready -U connecthub -d connecthub
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=5
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=120
+
+[Install]
+WantedBy=default.target

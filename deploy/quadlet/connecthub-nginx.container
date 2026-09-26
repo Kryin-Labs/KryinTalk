@@ -1,0 +1,36 @@
+# ──────────────────────────────────────────────
+# ConnectHub — Nginx Reverse Proxy (Quadlet)
+# ──────────────────────────────────────────────
+# Rootless Podman systemd unit for Nginx.
+# Place in: ~/.config/containers/systemd/connecthub-nginx.container
+# ──────────────────────────────────────────────
+
+[Unit]
+Description=ConnectHub Nginx Reverse Proxy
+After=connecthub-api.service
+Wants=connecthub-api.service
+
+[Container]
+Image=docker.io/library/nginx:1.27-alpine
+ContainerName=connecthub-nginx
+Network=connecthub.network
+PublishPort=80:80
+PublishPort=443:443
+
+# Mount nginx configuration
+Volume=%h/conhub/deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro,Z
+Volume=%h/conhub/deploy/nginx/conf.d:/etc/nginx/conf.d:ro,Z
+
+# Health check
+HealthCmd=curl -f http://localhost/health || exit 1
+HealthInterval=15s
+HealthTimeout=5s
+HealthRetries=3
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=60
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="connecthub_web">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>KryinTalk</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <!-- Legal Pages Hash Redirect & Interceptor -->
+  <script>
+    function checkLegalHash() {
+      const hash = (window.location.hash || '').toLowerCase();
+      if (hash === '#/terms' || hash === '#terms' || hash === '#/tos' || hash === '#tos') {
+        window.location.replace('/terms.html');
+      } else if (hash === '#/policy' || hash === '#policy' || hash === '#/privacy' || hash === '#privacy' || hash === '#/privacy-policy') {
+        window.location.replace('/privacy.html');
+      }
+    }
+    window.addEventListener('hashchange', checkLegalHash);
+    checkLegalHash();
+  </script>
+
+  <!-- ConnectHub Web Audio & Notification Engine -->
+  <script>
+    window.connectHubAudio = {
+      _ctx: null,
+      _getAudioContext: function() {
+        if (!this._ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            this._ctx = new AudioCtx();
+          }
+        }
+        if (this._ctx && this._ctx.state === 'suspended') {
+          this._ctx.resume();
+        }
+        return this._ctx;
+      },
+      playSentChime: function() {
+        try {
+          const ctx = this._getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          const now = ctx.currentTime;
+          osc.frequency.setValueAtTime(587.33, now); // D5
+          osc.frequency.exponentialRampToValueAtTime(880.00, now + 0.12); // A5
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.15);
+        } catch(e) {}
+      },
+      playReceivedChime: function() {
+        try {
+          const ctx = this._getAudioContext();
+          if (!ctx) return;
+          const now = ctx.currentTime;
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc1.type = 'sine';
+          osc2.type = 'sine';
+          osc1.frequency.setValueAtTime(523.25, now); // C5
+          osc1.frequency.setValueAtTime(659.25, now + 0.08); // E5
+          osc1.frequency.setValueAtTime(783.99, now + 0.16); // G5
+          osc2.frequency.setValueAtTime(1046.50, now + 0.16); // C6
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(ctx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.45);
+          osc2.start(now + 0.16);
+          osc2.stop(now + 0.45);
+        } catch(e) {}
+      }
+    };
+
+    window.connectHubNotifications = {
+      requestPermission: async function() {
+        if ('Notification' in window) {
+          if (Notification.permission === 'default') {
+            return await Notification.requestPermission();
+          }
+          return Notification.permission;
+        }
+        return 'denied';
+      },
+      showNotification: function(title, body, tag, icon) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+          try {
+            const notif = new Notification(title, {
+              body: body || 'New message on KryinTalk',
+              icon: icon || 'favicon.png',
+              tag: tag || 'connecthub-msg',
+            });
+            notif.onclick = function() {
+              window.focus();
+              notif.close();
+            };
+          } catch(e) {}
+        }
+      }
+    };
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

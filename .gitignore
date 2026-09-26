@@ -1,0 +1,81 @@
+# ──────────────────────────────────────────────
+# ConnectHub — Git Ignore
+# ──────────────────────────────────────────────
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+connecthub.db
+connecthub.db-shm
+connecthub.db-wal
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# uv
+.python-version
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Containers
+*.log
+
+# Alembic
+migrations/versions/*.pyc
+
+# TLS certs (dev)
+deploy/nginx/certs/
+
+# Local credentials file
+credentials.txt
+private_server_start.bat
+
+# Flutter / Dart
+.dart_tool/
+.dart-state/
+clients/web/.dart_tool/
+clients/web/build/
+
+# Backups & data
+*.zip
+*.sqlite
+data/backups/
+data/uploads/
+
+# Local holding area for retired one-off scripts and artifacts.
+IGNORE/
+tools/account-access-test/
+
+supabase/.temp/
+tools/supabase/
+supabase/verification/*.local.json
+tools/account-access-catalog.txt

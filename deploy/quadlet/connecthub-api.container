@@ -1,0 +1,38 @@
+# ──────────────────────────────────────────────
+# ConnectHub — API Server (Quadlet)
+# ──────────────────────────────────────────────
+# Rootless Podman systemd unit for the FastAPI backend.
+# Place in: ~/.config/containers/systemd/connecthub-api.container
+# ──────────────────────────────────────────────
+
+[Unit]
+Description=ConnectHub FastAPI Backend
+After=connecthub-postgres.service connecthub-redis.service connecthub-nats.service
+Requires=connecthub-postgres.service connecthub-redis.service connecthub-nats.service
+
+[Container]
+Image=localhost/connecthub-api:latest
+ContainerName=connecthub-api
+Network=connecthub.network
+PublishPort=8000:8000
+
+# Environment — override via EnvironmentFile in production
+Environment=APP_ENV=production
+Environment=APP_HOST=0.0.0.0
+Environment=POSTGRES_HOST=connecthub-postgres
+Environment=REDIS_HOST=connecthub-redis
+Environment=NATS_URL=nats://connecthub-nats:4222
+
+# Health check
+HealthCmd=curl -f http://localhost:8000/health || exit 1
+HealthInterval=15s
+HealthTimeout=5s
+HealthRetries=5
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=120
+
+[Install]
+WantedBy=default.target

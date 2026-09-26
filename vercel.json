@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "bash scripts/vercel_build.sh",
+  "installCommand": "echo Flutter dependencies are installed by the build script",
+  "outputDirectory": "clients/web/build/web",
+  "rewrites": [
+    {"source": "/auth/callback", "destination": "/index.html"}
+  ]
+}

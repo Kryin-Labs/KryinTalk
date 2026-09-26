@@ -1,0 +1,6 @@
+# ──────────────────────────────────────────────
+# ConnectHub — Redis Volume (Quadlet)
+# ──────────────────────────────────────────────
+
+[Volume]
+VolumeName=connecthub-redis-data

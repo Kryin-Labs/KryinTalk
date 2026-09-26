@@ -1,0 +1,38 @@
+# ──────────────────────────────────────────────
+# ConnectHub — NATS 2.10 + JetStream (Quadlet)
+# ──────────────────────────────────────────────
+# Rootless Podman systemd unit for NATS.
+# Place in: ~/.config/containers/systemd/connecthub-nats.container
+# ──────────────────────────────────────────────
+
+[Unit]
+Description=ConnectHub NATS 2.10 Event Broker (JetStream)
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/library/nats:2.10-alpine
+ContainerName=connecthub-nats
+Network=connecthub.network
+PublishPort=4222:4222
+PublishPort=8222:8222
+Volume=nats-data.volume:/data:Z
+
+# Use custom NATS config with JetStream enabled
+# Mount the config file from the deploy directory
+Volume=%h/conhub/deploy/nats/nats-server.conf:/etc/nats/nats-server.conf:ro,Z
+Exec=nats-server --config /etc/nats/nats-server.conf
+
+# Health check via monitoring endpoint
+HealthCmd=wget -q --spider http://localhost:8222/healthz || exit 1
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=5
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=60
+
+[Install]
+WantedBy=default.target

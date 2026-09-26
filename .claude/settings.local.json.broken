@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Narco/**)",
+      "Bash(echo \"D:\\\\\\\\conhub not found\")",
+      "Bash(claude *)",
+      "Read(//c/Users/Narco/.local/bin/**)",
+      "Bash(npm -g config get prefix)",
+      "Read(//c/Users/Narco/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/**)",
+      "Read(//c/Users/Narco/.claude/**)",
+      "Bash(claude --version)",
+      "Bash(npm list *)"
+    ]
+  }
+}

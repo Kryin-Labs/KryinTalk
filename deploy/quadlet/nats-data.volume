@@ -1,0 +1,6 @@
+# ──────────────────────────────────────────────
+# ConnectHub — NATS Volume (Quadlet)
+# ──────────────────────────────────────────────
+
+[Volume]
+VolumeName=connecthub-nats-data

@@ -1,0 +1,6 @@
+# ──────────────────────────────────────────────
+# ConnectHub — PostgreSQL Volume (Quadlet)
+# ──────────────────────────────────────────────
+
+[Volume]
+VolumeName=connecthub-postgres-data

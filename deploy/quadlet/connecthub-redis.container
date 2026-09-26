@@ -1,0 +1,35 @@
+# ──────────────────────────────────────────────
+# ConnectHub — Redis 7 (Quadlet)
+# ──────────────────────────────────────────────
+# Rootless Podman systemd unit for Redis.
+# Place in: ~/.config/containers/systemd/connecthub-redis.container
+# ──────────────────────────────────────────────
+
+[Unit]
+Description=ConnectHub Redis 7 Cache & Pub/Sub
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/library/redis:7-alpine
+ContainerName=connecthub-redis
+Network=connecthub.network
+PublishPort=6379:6379
+Volume=redis-data.volume:/data:Z
+
+# Run with AOF persistence enabled
+Exec=redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+# Health check
+HealthCmd=redis-cli ping | grep PONG
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=5
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutStartSec=60
+
+[Install]
+WantedBy=default.target

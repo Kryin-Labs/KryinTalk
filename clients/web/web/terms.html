@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service & Platform Governance — ConnectHub</title>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+    body {
+      background-color: #FAF9F6;
+      color: #1C1917;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+    }
+    .container {
+      max-width: 860px;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid #E7E5E4;
+      border-radius: 20px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    .header {
+      padding: 24px 32px;
+      background: #FFFFFF;
+      border-bottom: 1px solid #E7E5E4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .title-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .badge-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #F0FDF9;
+      border: 1px solid #CCFBF1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0F766E;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1C1917;
+    }
+    .header p {
+      font-size: 12.5px;
+      color: #78716C;
+      margin-top: 2px;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: #F0FDF9;
+      border: 1px solid #CCFBF1;
+      color: #0F766E;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 12.5px;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      background: #CCFBF1;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: #FFFFFF;
+      border: 1px solid #E7E5E4;
+      color: #1C1917;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12.5px;
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: #F5F5F4;
+    }
+    .content {
+      padding: 32px;
+    }
+    .meta-card {
+      background: #FAFAF9;
+      border: 1px solid #E7E5E4;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .meta-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      color: #0F766E;
+      background: #F0FDF9;
+      border: 1px solid #CCFBF1;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .meta-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1C1917;
+      margin-bottom: 6px;
+    }
+    .meta-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #57534E;
+    }
+    .section-card {
+      background: #FFFFFF;
+      border: 1px solid #E7E5E4;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    .section-card h2 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #1C1917;
+      margin-bottom: 10px;
+    }
+    .section-card p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #44403C;
+    }
+    .footer {
+      padding: 24px 32px;
+      background: #FAFAF9;
+      border-top: 1px solid #E7E5E4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: #78716C;
+    }
+    .footer a {
+      color: #0F766E;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title-group">
+        <div class="badge-icon">⚖️</div>
+        <div>
+          <h1>Terms of Service</h1>
+          <p>Platform Governance & Operational Standards</p>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/privacy.html" class="tab-btn">🛡️ Privacy Policy</a>
+        <a href="/" class="back-btn">← Back to App</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="meta-card">
+        <span class="meta-tag">Version 2026.2 • Effective August 2026</span>
+        <div class="meta-title">ConnectHub Enterprise Collaboration Agreement</div>
+        <div class="meta-desc">
+          This Agreement outlines the operational terms, safe harbor statutory protections, multi-tier permissions, and limitation of liability provisions governing access to and utilization of ConnectHub enterprise software services.
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>1. Acceptance of Terms, Corporate Governance & Scope</h2>
+        <p>
+          These Terms of Service constitute a legally binding agreement between you and the deploying operators of ConnectHub / Kryin-Talks ("the Platform"). By accessing the web client, mobile packages, or backend APIs, you agree to be bound by these provisions. If entering on behalf of an enterprise or university, you confirm that you possess full authority to bind such institution to these terms.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>2. User Authentication & Persistent Session Storage</h2>
+        <p>
+          Users must maintain valid organizational credentials. Enabling "Keep me signed in" stores persistent cryptographically secured JSON Web Token (JWT) Bearer access and refresh credentials in local device storage (browser LocalStorage / Android SharedPreferences). You remain responsible for all transmissions originating from sessions authenticated on your hardware until an explicit manual logout is triggered.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>3. Intermediary Status & Statutory Safe Harbor</h2>
+        <p>
+          ConnectHub operates as a technological communication conduit under Section 79 of the Information Technology Act, 2000 and applicable safe harbor frameworks. The platform does not initiate transmissions, select recipients, or modify electronic communications, and exercises no pre-emptive editorial screening over user transmissions.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>4. Acceptable Conduct & Content Standards</h2>
+        <p>
+          Users are strictly prohibited from transmitting content that is defamatory, obscene, invasive of privacy, infringing of intellectual property, malware-bearing, or in violation of statutory public order regulations under Rule 3(1)(b) of the IT Rules 2021.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>5. Role-Based Access Control & Administrative Overrides</h2>
+        <p>
+          ConnectHub enforces multi-tier Role-Based Access Control. Private groups remain strictly invisible to non-members. In emergency or moderation scenarios, authorized Super Administrators can activate the time-bounded 2-Minute Force Message Override to dispatch platform notices, with all actions recorded in the compliance audit trail.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>6. Limitation of Liability & Warranty Disclaimers</h2>
+        <p>
+          THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS TO THE MAXIMUM EXTENT PERMITTED BY LAW. CONNECTHUB DISCLAIMS ALL WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND ACCURACY. UNDER NO CIRCUMSTANCES SHALL PLATFORM OPERATORS BE LIABLE FOR INDIRECT, CONSEQUENTIAL, OR INCIDENTAL DAMAGES, LOSS OF PROFITS, OR SERVICE OUTAGES.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>7. Customer Data Ownership & Intellectual Property</h2>
+        <p>
+          The deploying organization and users retain full title and copyright over all messages, documents, and media uploaded to the platform. The platform source code, architecture, and trademarks remain the exclusive intellectual property of ConnectHub.
+        </p>
+      </div>
+
+      <div class="section-card">
+        <h2>8. Governing Law & Institutional Administrative Support</h2>
+        <p>
+          This Agreement is governed by applicable laws and institutional enterprise policies. User inquiries, safety concerns, or permission disputes are addressed through your deploying university / organization IT Helpdesk and Platform Super Administrator.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© 2026 ConnectHub Technologies. All rights reserved.</div>
+      <div><a href="/privacy.html">Privacy Policy</a> • <a href="/">Launch ConnectHub</a></div>
+    </div>
+  </div>
+</body>
+</html>

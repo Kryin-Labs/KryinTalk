@@ -1,0 +1,84 @@
+BEGIN;
+CREATE EXTENSION IF NOT EXISTS pgtap WITH SCHEMA extensions;
+SET search_path=public,extensions;
+SELECT no_plan();
+\ir fixtures/account_access.inc
+SELECT throws_ok($$INSERT INTO auth.users(id,email,raw_user_meta_data) VALUES(gen_random_uuid(),'collision@example.test','{"username":"TEST_ACTOR_1","display_name":"Collision"}')$$,'23505','Username unavailable','signup enforces normalized username uniqueness in trigger');
+SET LOCAL ROLE authenticated;
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000001","role":"authenticated"}',true);
+SELECT ok(public.has_verified_kryintalk_identity(),'pending identity verified');
+SELECT ok(NOT public.has_app_access(),'pending has no app access');
+SELECT is(public.get_current_user_profile()->>'access_status','pending','safe own profile readable');
+SELECT is(public.get_current_user_profile()->'roles','[]'::jsonb,'forged metadata grants no role');
+SELECT ok(NOT(public.get_current_user_profile()?'password_hash'),'hash private');
+SELECT is((SELECT count(*) FROM public.users),0::bigint,'raw directory unavailable even for self');
+SELECT is((SELECT count(*) FROM public.messages),0::bigint,'pending messages denied with nonempty fixtures');
+SELECT is((SELECT count(*) FROM public.notification_items),0::bigint,'pending notifications denied');
+SELECT is((SELECT count(*) FROM storage.objects),0::bigint,'pending storage read denied');
+SELECT is((SELECT count(*) FROM public.file_attachments),0::bigint,'pending files denied');
+SELECT is((SELECT count(*) FROM public.roles),0::bigint,'pending roles denied');
+SELECT throws_ok($$UPDATE public.users SET access_status='approved' WHERE id=auth.uid()$$,'42501',NULL,'direct access write denied');
+SELECT throws_ok($$UPDATE public.users SET policy_version='2026-09-26' WHERE id=auth.uid()$$,'42501',NULL,'direct consent write denied');
+SELECT throws_ok($$INSERT INTO public.audit_logs(action) VALUES('access.approved')$$,'42501',NULL,'audit forging denied');
+SELECT throws_ok($$SELECT public.list_kryintalk_groups()$$,'42501',NULL,'pending definer list denied');
+SELECT throws_ok($$SELECT public.respond_kryintalk_group_invitation(gen_random_uuid(),'accept',NULL)$$,'42501',NULL,'group invite cannot bypass approval');
+SELECT throws_ok($$SELECT public.list_app_accounts()$$,'42501',NULL,'pending admin endpoint denied');
+SELECT throws_ok($$INSERT INTO storage.objects(bucket_id,name) VALUES('attachments','files/'||auth.uid()||'/illegal')$$,'42501',NULL,'pending own-folder storage write denied');
+
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000002","role":"authenticated"}',true);
+SELECT ok(NOT public.has_verified_kryintalk_identity(),'unconfirmed identity denied');
+SELECT ok(public.get_current_user_profile() IS NULL,'unconfirmed profile fails closed');
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000006","role":"authenticated"}',true);
+SELECT ok(NOT public.has_app_access(),'mismatched identity denied');
+SELECT ok(public.get_current_user_profile() IS NULL,'mismatch profile denied');
+
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000003","role":"authenticated"}',true);
+SELECT ok(public.has_app_access(),'member positive access control');
+SELECT is((SELECT count(*) FROM public.messages),1::bigint,'member sees only own private conversation');
+SELECT is((SELECT count(*) FROM storage.objects),1::bigint,'member private object readable');
+SELECT is((SELECT count(*) FROM public.file_attachments),1::bigint,'member private file readable');
+SELECT throws_ok($$SELECT public.review_app_access('a1000000-0000-4000-8000-000000000001','approve',NULL)$$,'42501',NULL,'member cannot approve');
+
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000004","role":"authenticated"}',true);
+SELECT throws_ok($$SELECT public.review_app_access('a1000000-0000-4000-8000-000000000002','approve',NULL)$$,'22023',NULL,'unverified target cannot be approved');
+SELECT throws_ok($$SELECT public.set_app_account_role('a1000000-0000-4000-8000-000000000003','admin')$$,'42501',NULL,'admin cannot grant admin');
+SELECT throws_ok($$SELECT public.review_app_access('a1000000-0000-4000-8000-000000000005','suspend','test')$$,'42501',NULL,'admin cannot suspend superadmin');
+RESET ROLE;
+CREATE FUNCTION pg_temp.fail_access_audit() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN IF new.action='access.approved' THEN RAISE EXCEPTION 'Local audit failure'; END IF; RETURN new; END $$;
+CREATE TRIGGER test_audit_failure BEFORE INSERT ON public.audit_logs FOR EACH ROW EXECUTE FUNCTION pg_temp.fail_access_audit();
+SET LOCAL ROLE authenticated;
+SELECT throws_ok($$SELECT public.review_app_access('a1000000-0000-4000-8000-000000000001','approve',NULL)$$,'P0001','Local audit failure','approval fails atomically when audit fails');
+SELECT is(public.get_app_account_review('a1000000-0000-4000-8000-000000000001')->>'access_status','pending','failed audit rolls back approval');
+SELECT is(public.get_app_account_review('a1000000-0000-4000-8000-000000000001')->'roles','[]'::jsonb,'failed audit rolls back role grant');
+RESET ROLE;
+DROP TRIGGER test_audit_failure ON public.audit_logs;
+SET LOCAL ROLE authenticated;
+SELECT is(public.review_app_access('a1000000-0000-4000-8000-000000000001','approve',NULL)->>'access_status','approved','verified pending approval succeeds');
+SELECT ok(EXISTS(SELECT 1 FROM public.audit_logs WHERE action='access.approved' AND resource_id='a1000000-0000-4000-8000-000000000001'),'approval audited');
+SELECT is(public.review_app_access('a1000000-0000-4000-8000-000000000001','suspend','Local fixture')->>'is_suspended','true','suspend succeeds');
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000001","role":"authenticated"}',true);
+SELECT ok(NOT public.has_app_access(),'suspended session denied immediately');
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000005","role":"authenticated"}',true);
+SELECT throws_ok($$SELECT public.set_app_account_role(auth.uid(),'admin')$$,'42501',NULL,'self role changes denied');
+SELECT lives_ok($$SELECT public.list_kryintalk_groups()$$,'superadmin SETOF wrapper works');
+SELECT lives_ok($$SELECT public.get_conversation_state()$$,'TABLE return wrapper works');
+
+RESET ROLE;
+SELECT set_config('request.jwt.claims','{}',true);
+SELECT set_config('kryintalk.account_write','trusted',true);
+UPDATE public.users SET policy_version='old' WHERE id='a1000000-0000-4000-8000-000000000005';
+SELECT set_config('kryintalk.account_write','',true);
+SELECT throws_ok($$SELECT kryintalk_private.protect_last_superadmin('a1000000-0000-4000-8000-000000000005')$$,'42501',NULL,'last superadmin counted even with stale consent');
+SET LOCAL ROLE authenticated;
+SELECT set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000005","role":"authenticated"}',true);
+SELECT ok(NOT public.has_app_access(),'old consent blocks approved identity');
+SELECT is(public.record_account_consent('2026-09-26')->>'policy_version','2026-09-26','trusted consent survives both legacy triggers');
+SELECT ok(public.has_app_access(),'consent restores access');
+SELECT is((SELECT count(*) FROM public.messages),0::bigint,'superadmin cannot read unrelated private chats');
+SELECT ok(NOT has_table_privilege('authenticated','public.messages','TRUNCATE'),'direct truncate is forbidden');
+SELECT ok(NOT has_table_privilege('anon','public.users','TRIGGER'),'anonymous cannot attach security triggers');
+SELECT ok(NOT has_schema_privilege('authenticated','public','CREATE'),'clients cannot forge public security helpers');
+SELECT * FROM finish();
+ROLLBACK;
+

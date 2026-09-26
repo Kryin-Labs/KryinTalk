@@ -1,0 +1,83 @@
+# ──────────────────────────────────────────────
+# ConnectHub — Development Compose File
+# ──────────────────────────────────────────────
+# Convenience file for local development using podman-compose or docker-compose.
+# For production, use the Quadlet systemd units in deploy/quadlet/.
+#
+# Usage:
+#   podman-compose -f deploy/podman-compose.yaml up -d
+#   docker compose -f deploy/podman-compose.yaml up -d
+# ──────────────────────────────────────────────
+
+name: connecthub
+
+services:
+  # ── PostgreSQL 16 ──────────────────────────
+  postgres:
+    image: docker.io/library/postgres:16-alpine
+    container_name: connecthub-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: connecthub
+      # Refuse to start with a predictable database password.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD before starting}
+      POSTGRES_DB: connecthub
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U connecthub -d connecthub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - connecthub
+
+  # ── Redis 7 ────────────────────────────────
+  redis:
+    image: docker.io/library/redis:7-alpine
+    container_name: connecthub-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - connecthub
+
+  # ── NATS 2.10 + JetStream ─────────────────
+  nats:
+    image: docker.io/library/nats:2.10-alpine
+    container_name: connecthub-nats
+    restart: unless-stopped
+    ports:
+      - "4222:4222"   # Client connections
+      - "8222:8222"   # HTTP monitoring
+    command: nats-server --config /etc/nats/nats-server.conf
+    volumes:
+      - nats-data:/data
+      - ./nats/nats-server.conf:/etc/nats/nats-server.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8222/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - connecthub
+
+volumes:
+  postgres-data:
+  redis-data:
+  nats-data:
+
+networks:
+  connecthub:
+    driver: bridge
