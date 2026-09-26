@@ -95,7 +95,7 @@ class _AccessScreenState extends ConsumerState<AccessScreen>
 
   Future<void> _contact() async {
     final auth = ref.read(authProvider);
-    final details = 'Please approve my KryinTalk account: ' +
+    final details = 'Please approve my KryinTalks account: ' +
         auth.email +
         ', @' +
         (auth.user?['username']?.toString() ?? '') +
@@ -149,7 +149,7 @@ class _AccessScreenState extends ConsumerState<AccessScreen>
                 ? 'Your access request was declined. Contact an admin if you think this is a mistake.'
                 : restricted
                     ? 'Contact an admin for help.'
-                    : 'Please contact an admin to allow access to KryinTalk, or enter an invite code.',
+                    : 'Please contact an admin to allow access to KryinTalks, or enter an invite code.',
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Text(auth.email),

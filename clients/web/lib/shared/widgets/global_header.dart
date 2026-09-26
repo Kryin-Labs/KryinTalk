@@ -55,7 +55,7 @@ class GlobalHeader extends ConsumerWidget implements PreferredSizeWidget {
     final isMobile = screenWidth < 600;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final roleLabel = authState.isSuperAdmin
-        ? 'Administrator · KryinTalk'
+        ? 'Administrator · KryinTalks'
         : 'Workspace Member';
 
     return Container(

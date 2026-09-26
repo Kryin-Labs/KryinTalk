@@ -251,7 +251,7 @@ class _SaaSSchoolSidebar extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               physics: const NeverScrollableScrollPhysics(),
                               child: Text(
-                                'KryinTalk',
+                                'KryinTalks',
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w800,

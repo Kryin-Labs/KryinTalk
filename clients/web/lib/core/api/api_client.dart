@@ -930,7 +930,7 @@ class _SupabaseBridgeInterceptor extends Interceptor {
     final status = SupabaseService.instance.hasSession ? 501 : 401;
     final message = status == 401
         ? 'Please sign in to continue.'
-        : 'This action is not available in KryinTalk cloud yet.';
+        : 'This action is not available in KryinTalks cloud yet.';
     handler.reject(DioException(
       requestOptions: options,
       response: Response(

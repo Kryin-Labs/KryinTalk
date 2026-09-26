@@ -274,7 +274,7 @@ class AuthLayout extends StatelessWidget {
                         child: SizedBox(
                             width: double.infinity,
                             child: Text(
-                                '© ${DateTime.now().year} KryinLabs · KryinTalk',
+                                '© ${DateTime.now().year} KryinLabs · KryinTalks',
                                 style: text.bodySmall?.copyWith(
                                     fontSize: 11,
                                     color: const Color(0xFF637089)))))
@@ -340,7 +340,7 @@ class _ConversationPanel extends StatelessWidget {
               ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 350),
                   child: const Text(
-                      'Chats, groups and shared files. A simpler place for your team to stay connected with KryinTalk.',
+                      'Chats, groups and shared files. A simpler place for your team to stay connected with KryinTalks.',
                       style: TextStyle(
                           color: Color(0xFFD5E3FA),
                           fontSize: 14,

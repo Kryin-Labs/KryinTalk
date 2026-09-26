@@ -57,7 +57,7 @@ class AuthService {
       return const LoginResult(
           success: false,
           error:
-              'KryinTalk could not initialize Supabase. Please reload the app.');
+              'KryinTalks could not initialize Supabase. Please reload the app.');
     }
     try {
       await SupabaseService.instance.signIn(email: email, password: password);

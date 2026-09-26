@@ -131,7 +131,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       switchLabel: 'Sign in',
       onSwitch: _busy ? null : () => context.go('/login'),
       subtitle:
-          'Get started with KryinTalk. Confirm your email, then request access.',
+          'Get started with KryinTalks. Confirm your email, then request access.',
       child: AutofillGroup(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

@@ -1,4 +1,4 @@
-/// KryinTalk's theme-aware brand mark and wordmark.
+/// KryinTalks's theme-aware brand mark and wordmark.
 library;
 
 import 'package:flutter/material.dart';
@@ -54,7 +54,7 @@ class KryinTalkLogo extends StatelessWidget {
         if (showText) ...[
           const SizedBox(width: 12),
           Flexible(child: Text(
-            'KryinTalk',
+            'KryinTalks',
             style: TextStyle(
               fontSize: textSize,
               fontWeight: FontWeight.w800,

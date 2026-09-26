@@ -1,4 +1,4 @@
-/// KryinTalk — App Entry Point.
+/// KryinTalks — App Entry Point.
 ///
 /// Initializes Riverpod, sets up theming and routing.
 library;
@@ -53,7 +53,7 @@ class KryinTalkApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp.router(
-      title: 'KryinTalk',
+      title: 'KryinTalks',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,

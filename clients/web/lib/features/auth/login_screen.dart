@@ -44,7 +44,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         title: 'Welcome back',
         switchLabel: 'Create account',
         onSwitch: _busy ? null : () => context.go('/register'),
-        subtitle: 'Sign in with your email to continue to KryinTalk.',
+        subtitle: 'Sign in with your email to continue to KryinTalks.',
         child: AutofillGroup(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

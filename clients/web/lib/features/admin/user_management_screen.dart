@@ -191,7 +191,7 @@ class _UserManagementScreenState extends ConsumerState<UserManagementScreen> {
                           Text(action == 'approve'
                               ? 'Allow ' +
                                   user['display_name'].toString() +
-                                  ' to use KryinTalk as a member?'
+                                  ' to use KryinTalks as a member?'
                               : label +
                                   ' for ' +
                                   user['display_name'].toString() +
@@ -395,7 +395,7 @@ class _UserManagementScreenState extends ConsumerState<UserManagementScreen> {
           Text('User access',
               style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: 8),
-          const Text('Review personal accounts and grant access to KryinTalk.'),
+          const Text('Review personal accounts and grant access to KryinTalks.'),
           const SizedBox(height: 20),
           Wrap(spacing: 8, runSpacing: 8, children: [
             for (final (index, title)
