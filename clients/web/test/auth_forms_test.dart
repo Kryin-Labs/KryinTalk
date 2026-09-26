@@ -48,8 +48,9 @@ void main() {
         child: MaterialApp(
             theme: dark ? AppTheme.dark : AppTheme.light,
             builder: (ctx, child) => MediaQuery(
-                data: MediaQuery.of(ctx)
-                    .copyWith(textScaler: TextScaler.linear(scale)),
+                data: MediaQuery.of(ctx).copyWith(
+                    textScaler: TextScaler.linear(scale),
+                    disableAnimations: true),
                 child: child!),
             home: screen)));
     await tester.pumpAndSettle();
@@ -151,6 +152,13 @@ void main() {
           ValueKey(screen is LoginScreen ? 'login-submit' : 'register-submit'));
       expect(Theme.of(tester.element(submit)).colorScheme.primary,
           const Color(0xFF4779FF));
+      expect(tester.widget<Scaffold>(find.byType(Scaffold)).backgroundColor,
+          Colors.white);
+      final switchButton = tester
+          .widget<OutlinedButton>(find.byKey(const ValueKey('auth-switch')));
+      expect(switchButton.onPressed, isNotNull);
+      expect(switchButton.style!.shape!.resolve({}),
+          isA<RoundedRectangleBorder>());
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
     }

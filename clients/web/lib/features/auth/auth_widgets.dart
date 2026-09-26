@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../shared/widgets/connect_hub_logo.dart';
+import 'ribbon_glow.dart';
 import '../legal/terms_screen.dart';
 import '../legal/privacy_screen.dart';
 
@@ -76,39 +77,44 @@ class PolicyAgreement extends StatelessWidget {
 class AuthLayout extends StatelessWidget {
   const AuthLayout(
       {super.key,
-      required this.child,
       required this.title,
       required this.subtitle,
+      required this.child,
       this.switchLabel,
       this.onSwitch});
-  final Widget child;
   final String title, subtitle;
+  final Widget child;
   final String? switchLabel;
   final VoidCallback? onSwitch;
   static const blue = Color(0xFF4779FF);
 
   @override
   Widget build(BuildContext context) {
-    final base = Theme.of(context), dark = base.brightness == Brightness.dark;
+    final base = Theme.of(context);
     final colors = ColorScheme.fromSeed(
         seedColor: blue,
         primary: blue,
-        brightness: base.brightness,
-        surface: dark ? const Color(0xFF151E31) : const Color(0xFFF8FAFF));
+        brightness: Brightness.light,
+        surface: Colors.white);
     final border = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(
-            color: dark ? const Color(0xFF34405A) : const Color(0xFFD4DAE5)));
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFDDE3ED)));
+    final text = base.textTheme.apply(
+        bodyColor: const Color(0xFF17243B),
+        displayColor: const Color(0xFF17243B));
     final theme = base.copyWith(
+        brightness: Brightness.light,
         colorScheme: colors,
-        textTheme: base.textTheme
-            .apply(bodyColor: colors.onSurface, displayColor: colors.onSurface),
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: text,
         inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            fillColor: dark ? const Color(0xFF1D2940) : const Color(0xFFF9FAFD),
-            labelStyle: TextStyle(fontSize: 13, color: colors.onSurfaceVariant),
+            fillColor: const Color(0xFFFAFBFD),
+            labelStyle: const TextStyle(fontSize: 14, color: Color(0xFF637089)),
+            helperStyle:
+                const TextStyle(fontSize: 12, color: Color(0xFF637089)),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
             border: border,
             enabledBorder: border,
             disabledBorder: border,
@@ -119,28 +125,31 @@ class AuthLayout extends StatelessWidget {
             focusedErrorBorder: border.copyWith(
                 borderSide: BorderSide(color: colors.error, width: 1.5))),
         checkboxTheme: CheckboxThemeData(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             fillColor: WidgetStateProperty.resolveWith(
                 (s) => s.contains(WidgetState.selected) ? blue : null)),
         textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-                foregroundColor:
-                    dark ? const Color(0xFFA7C0FF) : const Color(0xFF2455C9))),
+                foregroundColor: const Color(0xFF2455C9),
+                textStyle: const TextStyle(
+                    fontSize: 13, fontWeight: FontWeight.w600))),
         filledButtonTheme: FilledButtonThemeData(
             style: FilledButton.styleFrom(
-                minimumSize: const Size.fromHeight(48),
+                minimumSize: const Size.fromHeight(52),
                 backgroundColor: blue,
                 foregroundColor: Colors.white,
-                disabledBackgroundColor:
-                    dark ? const Color(0xFF374153) : const Color(0xFFDCE0E7),
-                disabledForegroundColor:
-                    dark ? const Color(0xFFADB5C4) : const Color(0xFF697181),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))));
+                disabledBackgroundColor: const Color(0xFFE9EFFC),
+                disabledForegroundColor: const Color(0xFF657393),
+                textStyle:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: .1),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)))));
     return Theme(
         data: theme,
         child: Builder(
             builder: (context) => Scaffold(
-                backgroundColor:
-                    dark ? const Color(0xFF101827) : const Color(0xFFEBEDF2),
+                backgroundColor: Colors.white,
                 body: SafeArea(child: LayoutBuilder(builder: (context, size) {
                   final wide = size.maxWidth >= 1000 &&
                       size.maxHeight >= 650 &&
@@ -148,7 +157,7 @@ class AuthLayout extends StatelessWidget {
                   final form = Column(children: [
                     Padding(
                         padding: EdgeInsets.fromLTRB(
-                            wide ? 24 : 20, 18, wide ? 24 : 20, 8),
+                            wide ? 28 : 20, 22, wide ? 28 : 20, 12),
                         child: SizedBox(
                             width: double.infinity,
                             child: Wrap(
@@ -158,30 +167,40 @@ class AuthLayout extends StatelessWidget {
                                 runSpacing: 12,
                                 children: [
                                   const KryinTalkLogo(
-                                      size: 34,
+                                      size: 36,
                                       showText: true,
-                                      textSize: 18,
+                                      textSize: 19,
                                       backgroundColor: blue,
                                       iconColor: Colors.white),
                                   if (switchLabel != null)
-                                    TextButton(
+                                    OutlinedButton(
+                                        key: const ValueKey('auth-switch'),
                                         onPressed: onSwitch,
-                                        style: TextButton.styleFrom(
-                                            backgroundColor: colors.surface,
-                                            side: BorderSide(
-                                                color: colors.outlineVariant),
+                                        style: OutlinedButton.styleFrom(
+                                            foregroundColor:
+                                                const Color(0xFF233956),
+                                            backgroundColor: Colors.white,
+                                            minimumSize: const Size(0, 44),
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 16, vertical: 12)),
-                                        child: Text(switchLabel!)),
+                                                horizontal: 20, vertical: 14),
+                                            side: const BorderSide(
+                                                color: Color(0xFFDDE3ED)),
+                                            textStyle: const TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12))),
+                                        child: Text(switchLabel!))
                                 ]))),
                     Expanded(
                         child: LayoutBuilder(
                             builder: (context, area) => SingleChildScrollView(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: wide ? 36 : 24, vertical: 24),
+                                    horizontal: wide ? 40 : 24, vertical: 28),
                                 child: ConstrainedBox(
                                     constraints: BoxConstraints(
-                                        minHeight: (area.maxHeight - 48)
+                                        minHeight: (area.maxHeight - 56)
                                             .clamp(0, double.infinity)),
                                     child: Center(
                                         child: ConstrainedBox(
@@ -194,82 +213,68 @@ class AuthLayout extends StatelessWidget {
                                                 children: [
                                                   Center(
                                                       child: Container(
-                                                          width: 48,
-                                                          height: 48,
+                                                          width: 60,
+                                                          height: 60,
                                                           decoration: BoxDecoration(
-                                                              color: colors
-                                                                  .surface,
+                                                              color: const Color(
+                                                                  0xFFF0F5FF),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          14),
-                                                              border: Border
-                                                                  .all(
-                                                                      color: colors
-                                                                          .outlineVariant),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                    color: blue
-                                                                        .withValues(
-                                                                            alpha:
-                                                                                .08),
-                                                                    blurRadius:
-                                                                        0,
-                                                                    spreadRadius:
-                                                                        5)
-                                                              ]),
-                                                          child: Icon(
+                                                                          18),
+                                                              border: Border.all(
+                                                                  color: const Color(
+                                                                      0xFFE0EAFF))),
+                                                          child: const Icon(
                                                               Icons
-                                                                  .person_outline_rounded,
-                                                              color: colors
-                                                                  .onSurface,
-                                                              size: 25))),
-                                                  const SizedBox(height: 20),
+                                                                  .person_rounded,
+                                                              size: 31,
+                                                              color: blue))),
+                                                  const SizedBox(height: 22),
                                                   Text(title,
                                                       textAlign:
                                                           TextAlign.center,
-                                                      style: theme.textTheme
-                                                          .headlineMedium
+                                                      style: text.headlineMedium
                                                           ?.copyWith(
-                                                              fontSize: 28,
+                                                              fontSize: 30,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w600,
+                                                                      .w700,
+                                                              height: 1.2,
                                                               letterSpacing:
-                                                                  -.8)),
-                                                  const SizedBox(height: 8),
+                                                                  -1)),
+                                                  const SizedBox(height: 10),
                                                   Text(subtitle,
                                                       textAlign:
                                                           TextAlign.center,
-                                                      style: theme
-                                                          .textTheme.bodySmall
+                                                      style: text.bodySmall
                                                           ?.copyWith(
-                                                              color: colors
-                                                                  .onSurfaceVariant,
-                                                              height: 1.6)),
-                                                  const SizedBox(height: 24),
+                                                              fontSize: 13,
+                                                              color: const Color(
+                                                                  0xFF637089),
+                                                              height: 1.65)),
+                                                  const SizedBox(height: 30),
                                                   child,
                                                 ]))))))),
                     Padding(
-                        padding: const EdgeInsets.fromLTRB(24, 10, 24, 18),
+                        padding: const EdgeInsets.fromLTRB(28, 14, 28, 20),
                         child: SizedBox(
                             width: double.infinity,
                             child: Text(
-                                '© ' +
-                                    DateTime.now().year.toString() +
-                                    ' KryinLabs · KryinTalk',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                    color: colors.onSurfaceVariant)))),
+                                '© ${DateTime.now().year} KryinLabs · KryinTalk',
+                                style: text.bodySmall?.copyWith(
+                                    fontSize: 11,
+                                    color: const Color(0xFF637089)))))
                   ]);
                   return Padding(
-                      padding: EdgeInsets.all(wide ? 14 : 0),
+                      padding: EdgeInsets.all(wide ? 16 : 0),
                       child: wide
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                   Expanded(child: form),
-                                  const SizedBox(width: 14),
-                                  const Expanded(child: _ConversationPanel()),
+                                  const SizedBox(width: 16),
+                                  const Expanded(child: _ConversationPanel())
                                 ])
                           : form);
                 })))));
@@ -280,151 +285,95 @@ class _ConversationPanel extends StatelessWidget {
   const _ConversationPanel();
   @override
   Widget build(BuildContext context) => ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: DecoratedBox(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Color(0xFFFAFCFF),
-                Color(0xFFE8EEFF),
-                Color(0xFF9DBAFF),
-                Color(0xFF5B87FF)
-              ],
-                  stops: [
-                0,
-                .35,
-                .7,
-                1
-              ])),
-          child: LayoutBuilder(
-              builder: (context, size) => Stack(children: [
-                    const Positioned.fill(
-                        child: CustomPaint(painter: _ConversationTiles())),
-                    Padding(
-                        padding: const EdgeInsets.all(32),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Bring your conversations\ntogether.',
-                                  style: TextStyle(
-                                      color: Color(0xFF101A2C),
-                                      fontSize: 34,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.15,
-                                      letterSpacing: -1)),
-                              const SizedBox(height: 16),
-                              ConstrainedBox(
-                                  constraints: BoxConstraints(maxWidth: 350),
-                                  child: Text(
-                                      'Chats, groups and shared files. A simpler place for your team to stay connected with KryinTalk.',
-                                      style: TextStyle(
-                                          color: Color(0xFF4D5870),
-                                          fontSize: 14,
-                                          height: 1.65))),
-                              const Spacer(),
-                              for (final item in [
-                                (
-                                  Icons.forum_outlined,
-                                  'Conversations that stay connected',
-                                  'Chats'
-                                ),
-                                (
-                                  Icons.folder_open_rounded,
-                                  'Ideas and files, shared in one place',
-                                  'Files'
-                                ),
-                                (
-                                  Icons.verified_user_outlined,
-                                  'A community with approved access',
-                                  'Members'
-                                )
-                              ])
-                                Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 18, vertical: 20),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white
-                                                .withValues(alpha: .14),
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                            border: Border.all(
-                                                color: Colors.white
-                                                    .withValues(alpha: .15))),
-                                        child: Row(children: [
-                                          Icon(item.$1,
-                                              color: const Color(0xFF19356B),
-                                              size: 22),
-                                          const SizedBox(width: 14),
-                                          Expanded(
-                                              child: Text(item.$2,
-                                                  style: const TextStyle(
-                                                      color: const Color(
-                                                          0xFF19356B),
-                                                      fontSize: 13,
-                                                      height: 1.5))),
-                                          const SizedBox(width: 16),
-                                          Text(item.$3,
-                                              style: const TextStyle(
-                                                  color: Color(0xFF244576),
-                                                  fontSize: 11))
-                                        ]))),
-                              const SizedBox(height: 4),
-                            ])),
-                    Positioned(
-                        top: size.maxHeight * .28,
-                        right: size.maxWidth * .14,
-                        child: ExcludeSemantics(
-                            child: Transform(
-                                transform: Matrix4.identity()
-                                  ..setEntry(3, 2, .001)
-                                  ..rotateX(.4)
-                                  ..rotateZ(-.65),
-                                alignment: Alignment.center,
-                                child: Container(
-                                    width: 126,
-                                    height: 126,
-                                    decoration: BoxDecoration(
-                                        color: AuthLayout.blue,
-                                        borderRadius: BorderRadius.circular(28),
-                                        border: Border.all(
-                                            color: const Color(0xFF92B4FF),
-                                            width: 3),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: const Color(0xFF3268EC)
-                                                  .withValues(alpha: .35),
-                                              offset: const Offset(-12, 22),
-                                              blurRadius: 25)
-                                        ]),
-                                    child: const Icon(Icons.forum_rounded,
-                                        color: Colors.white, size: 64))))),
-                  ]))));
+      borderRadius: BorderRadius.circular(28),
+      child: Stack(children: [
+        const Positioned.fill(child: RibbonGlow()),
+        const Positioned.fill(
+            child: IgnorePointer(
+                child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+              Color(0x99071025),
+              Color(0x00071025),
+              Color(0xCC071025)
+            ],
+                            stops: [
+              0,
+              .5,
+              1
+            ]))))),
+        Padding(
+            padding: const EdgeInsets.all(40),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('A LITTLE CLOSER. A LOT MORE CONNECTED.',
+                  style: TextStyle(
+                      color: Color(0xFFAFCBFF),
+                      fontSize: 10,
+                      letterSpacing: 1.4,
+                      fontWeight: FontWeight.w700)),
+              const SizedBox(height: 20),
+              Text('Bring your conversations\ntogether.',
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w700,
+                      height: 1.15,
+                      letterSpacing: -1.5)),
+              const SizedBox(height: 18),
+              ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 350),
+                  child: const Text(
+                      'Chats, groups and shared files. A simpler place for your team to stay connected with KryinTalk.',
+                      style: TextStyle(
+                          color: Color(0xFFD5E3FA),
+                          fontSize: 14,
+                          height: 1.75))),
+              const Spacer(),
+              const Text('YOUR PEOPLE. YOUR SPACE.',
+                  style: TextStyle(
+                      color: Color(0xFFAFCBFF),
+                      fontSize: 10,
+                      letterSpacing: 1.4,
+                      fontWeight: FontWeight.w700)),
+              const SizedBox(height: 12),
+              const Text(
+                  'One place to share ideas,\nand keep the conversation going.',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      height: 1.5,
+                      letterSpacing: -.4)),
+              const SizedBox(height: 20),
+              const Wrap(spacing: 10, runSpacing: 10, children: [
+                _FeatureLabel(Icons.forum_outlined, 'Chats'),
+                _FeatureLabel(Icons.folder_outlined, 'Shared files'),
+                _FeatureLabel(Icons.verified_user_outlined, 'Approved access')
+              ]),
+            ]))
+      ]));
 }
 
-class _ConversationTiles extends CustomPainter {
-  const _ConversationTiles();
+class _FeatureLabel extends StatelessWidget {
+  const _FeatureLabel(this.icon, this.label);
+  final IconData icon;
+  final String label;
   @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = const Color(0xFF6583BC).withValues(alpha: .1)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
-    for (var i = 0; i < 6; i++) {
-      final x = size.width * .4 + i * 125, y = size.height * .19 - i * 66;
-      final path = Path()
-        ..moveTo(x, y)
-        ..lineTo(x + 135, y + 65)
-        ..lineTo(x + 10, y + 130)
-        ..lineTo(x - 125, y + 65)
-        ..close();
-      canvas.drawPath(path, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_ConversationTiles oldDelegate) => false;
+  Widget build(BuildContext context) => Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+      decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: .08),
+          border: Border.all(color: Colors.white.withValues(alpha: .16)),
+          borderRadius: BorderRadius.circular(10)),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(icon, size: 15, color: const Color(0xFFB9D2FF)),
+        const SizedBox(width: 8),
+        Text(label,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 11, fontWeight: FontWeight.w500))
+      ]));
 }
