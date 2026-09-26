@@ -44,20 +44,6 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
-  <!-- Legal Pages Hash Redirect & Interceptor -->
-  <script>
-    function checkLegalHash() {
-      const hash = (window.location.hash || '').toLowerCase();
-      if (hash === '#/terms' || hash === '#terms' || hash === '#/tos' || hash === '#tos') {
-        window.location.replace('/terms.html');
-      } else if (hash === '#/policy' || hash === '#policy' || hash === '#/privacy' || hash === '#privacy' || hash === '#/privacy-policy') {
-        window.location.replace('/privacy.html');
-      }
-    }
-    window.addEventListener('hashchange', checkLegalHash);
-    checkLegalHash();
-  </script>
-
   <!-- ConnectHub Web Audio & Notification Engine -->
   <script>
     window.connectHubAudio = {

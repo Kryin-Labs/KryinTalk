@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../shared/widgets/connect_hub_logo.dart';
 import 'ribbon_glow.dart';
 import '../legal/terms_screen.dart';
@@ -65,10 +66,22 @@ class PolicyAgreement extends StatelessWidget {
                 'I agree to the Terms and acknowledge the Privacy Policy.')),
         Wrap(spacing: 8, children: [
           TextButton(
-              onPressed: () => showAccountPolicyDialog(context, privacy: false),
+              onPressed: () {
+                if (GoRouter.maybeOf(context) != null) {
+                  context.go('/terms');
+                } else {
+                  showAccountPolicyDialog(context, privacy: false);
+                }
+              },
               child: const Text('Terms of Service')),
           TextButton(
-              onPressed: () => showAccountPolicyDialog(context, privacy: true),
+              onPressed: () {
+                if (GoRouter.maybeOf(context) != null) {
+                  context.go('/privacy');
+                } else {
+                  showAccountPolicyDialog(context, privacy: true);
+                }
+              },
               child: const Text('Privacy Policy')),
         ]),
       ]);

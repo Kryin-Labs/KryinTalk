@@ -26,13 +26,20 @@ import '../../features/admin/audit_log_screen.dart';
 import '../../features/admin/stats_dashboard_screen.dart';
 import '../../features/friends/friends_screen.dart';
 import '../../features/settings/settings_screen.dart';
-import '../../features/legal/terms_screen.dart';
-import '../../features/legal/privacy_screen.dart';
+import '../../features/legal/legal_page.dart';
 import '../../shared/widgets/app_scaffold.dart';
 
 String? accountRedirect(AuthState auth, Uri uri) {
   final path = uri.path;
-  if (['/terms', '/privacy', '/auth/callback'].contains(path)) return null;
+  if ([
+    '/terms',
+    '/privacy',
+    '/acceptable-use',
+    '/copyright',
+    '/contact',
+    '/about',
+    '/auth/callback'
+  ].contains(path)) return null;
   final public = ['/login', '/register', '/check-email'].contains(path) ||
       path.startsWith('/join/');
   if (auth.isLoading)
@@ -72,7 +79,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             '/access',
             '/consent',
             '/terms',
-            '/privacy'
+            '/privacy',
+            '/acceptable-use',
+            '/copyright',
+            '/contact',
+            '/about'
           ].contains(path)) {
         pendingLocation = state.uri;
       }
@@ -110,12 +121,25 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/terms',
-        builder: (context, state) => const TermsScreen(),
+        builder: (context, state) => const LegalTermsPage(),
       ),
       GoRoute(
         path: '/privacy',
-        builder: (context, state) => const PrivacyPolicyScreen(),
+        builder: (context, state) => const LegalPrivacyPage(),
       ),
+      GoRoute(
+          path: '/acceptable-use',
+          builder: (context, state) =>
+              const LegalInfoPage(type: 'acceptable-use')),
+      GoRoute(
+          path: '/copyright',
+          builder: (context, state) => const LegalInfoPage(type: 'copyright')),
+      GoRoute(
+          path: '/contact',
+          builder: (context, state) => const LegalInfoPage(type: 'contact')),
+      GoRoute(
+          path: '/about',
+          builder: (context, state) => const LegalInfoPage(type: 'about')),
       GoRoute(
         path: '/join/:token',
         builder: (context, state) =>
