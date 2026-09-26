@@ -1,11 +1,11 @@
-/// ConnectHub — Privacy Policy Screen & Modal.
+/// KryinTalks — Privacy Policy Screen & Modal.
 ///
 /// Comprehensive Privacy Policy and Personal Data Governance Disclosure compliant
 /// with the Digital Personal Data Protection Act, 2023 (DPDPA), Information Technology
 /// Act, 2000, and Information Technology (Reasonable Security Practices and Procedures
 /// and Sensitive Personal Data or Information) Rules, 2011.
 ///
-/// Designed in ConnectHub's signature Light Cream & Claymorphism Theme.
+/// Designed in KryinTalks's signature Light Cream & Claymorphism Theme.
 library;
 
 import 'package:flutter/material.dart';
@@ -55,13 +55,13 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
       'id': '1',
       'title': '1. General Statement of Privacy & Statutory Scope (DPDPA 2023 & IT Act 2000)',
       'content':
-          'ConnectHub / Kryin-Talks ("the Platform", "we", "our", "us") recognizes the paramount importance of data privacy, institutional information security, and confidentiality. This Privacy Policy and Personal Data Governance Disclosure delineates the principles, technical methodologies, and regulatory frameworks governing the collection, processing, storage, transit, and lifecycle management of personal data and enterprise communication records within our platform. This policy is executed in comprehensive conformity with the Digital Personal Data Protection Act, 2023 (DPDPA), the Information Technology Act, 2000, and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 under the laws of the Republic of India. By accessing, deploying, or utilizing ConnectHub through web interfaces, desktop clients, or mobile application packages (including Android APK binaries), you consent to the data governance practices described herein.',
+          'KryinTalks ("the Platform", "we", "our", "us") recognizes the paramount importance of data privacy, institutional information security, and confidentiality. This Privacy Policy and Personal Data Governance Disclosure delineates the principles, technical methodologies, and regulatory frameworks governing the collection, processing, storage, transit, and lifecycle management of personal data and enterprise communication records within our platform. This policy is executed in comprehensive conformity with the Digital Personal Data Protection Act, 2023 (DPDPA), the Information Technology Act, 2000, and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 under the laws of the Republic of India. By accessing, deploying, or utilizing KryinTalks through web interfaces, desktop clients, or mobile application packages (including Android APK binaries), you consent to the data governance practices described herein.',
     },
     {
       'id': '2',
       'title': '2. Comprehensive Categories of Information Collected & Processed',
       'content':
-          'To deliver real-time collaboration services, authenticate organizational members, and maintain compliance audit trails, ConnectHub processes specific categories of electronic information as detailed below:\n\n'
+          'To deliver real-time collaboration services, authenticate organizational members, and maintain compliance audit trails, KryinTalks processes specific categories of electronic information as detailed below:\n\n'
           '• (a) Account & Identity Information: User full name, display name, registered corporate email address, @username handle, encrypted and cryptographically salted password hashes (Argon2 / bcrypt implementations), profile avatar image assets, assigned enterprise organizational roles, department affiliations, and account status indicators.\n\n'
           '• (b) Hardware Telemetry & Network Identifiers: Browser fingerprints, operating system type and build version, User-Agent strings, display screen resolutions, public IPv4 and IPv6 network addresses, local private IP network metadata, WebSocket connection parameters, and persistent hardware device identifiers on native Android mobile APK installations.\n\n'
           '• (c) Authentication & Session State Tokens: When the "Keep me signed in" configuration is engaged upon authentication, cryptographically signed JSON Web Token (JWT) Bearer access and refresh tokens are stored locally on your physical client device storage (browser LocalStorage, IndexedDB, or Android SharedPreferences) to facilitate continuous session persistence until an explicit manual logout is triggered.\n\n'
@@ -72,31 +72,31 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
       'id': '3',
       'title': '3. Legal Grounds and Operational Purposes of Data Processing',
       'content':
-          'All electronic data collected by ConnectHub is processed strictly pursuant to legitimate operational requirements and authorized corporate purposes, including: (a) authenticating user identity and preventing unauthorized account takeover; (b) establishing secure real-time messaging pipelines and WebSocket channels; (c) enforcing granular Role-Based Access Control (RBAC) permission ceilings; (d) generating regulatory compliance logs and supervisory oversight records for organizational administrators; (e) routing in-app, browser, and mobile notifications for message mentions and group invites; and (f) maintaining platform cyber defense against distributed denial-of-service, malicious script injection, or unauthorized intrusion.',
+          'All electronic data collected by KryinTalks is processed strictly pursuant to legitimate operational requirements and authorized corporate purposes, including: (a) authenticating user identity and preventing unauthorized account takeover; (b) establishing secure real-time messaging pipelines and WebSocket channels; (c) enforcing granular Role-Based Access Control (RBAC) permission ceilings; (d) generating regulatory compliance logs and supervisory oversight records for organizational administrators; (e) routing in-app, browser, and mobile notifications for message mentions and group invites; and (f) maintaining platform cyber defense against distributed denial-of-service, malicious script injection, or unauthorized intrusion.',
     },
     {
       'id': '4',
       'title': '4. Hardware Storage Mechanics & "Keep Me Signed In" Session Persistence',
       'content':
-          'The activation of "Keep me signed in" during user authentication causes the client software to persist cryptographically secured JWT authentication tokens in local device memory and storage. This persistent credential architecture allows users to remain logged in across application restarts, browser reboots, and operating system cycles without re-entering credentials. You are explicitly advised that persistent session tokens remain active on that specific device until you perform an explicit manual logout. Users accessing ConnectHub from public, shared, or untrusted computer terminals should never enable persistent sign-in and must always execute a manual logout upon session conclusion to purge locally cached tokens.',
+          'The activation of "Keep me signed in" during user authentication causes the client software to persist cryptographically secured JWT authentication tokens in local device memory and storage. This persistent credential architecture allows users to remain logged in across application restarts, browser reboots, and operating system cycles without re-entering credentials. You are explicitly advised that persistent session tokens remain active on that specific device until you perform an explicit manual logout. Users accessing KryinTalks from public, shared, or untrusted computer terminals should never enable persistent sign-in and must always execute a manual logout upon session conclusion to purge locally cached tokens.',
     },
     {
       'id': '5',
       'title': '5. Strict Group Isolation, Zero-Leak Partitioning & Administrative Access',
       'content':
-          'ConnectHub enforces zero-leak multi-tenant and group-level data isolation. Private groups and unlisted communication channels are mathematically and programmatically isolated from non-members. Non-members cannot discover, index, view metadata for, or inspect messages within private groups. Organization administrators and Super Administrators possess supervisory visibility solely in accordance with statutory compliance and institutional policy frameworks. Any administrative access, role elevation, or utilization of time-bounded emergency overrides (such as the SuperAdmin 2-Minute Force Message Override) is immutably recorded in the central compliance audit trail.',
+          'KryinTalks enforces zero-leak multi-tenant and group-level data isolation. Private groups and unlisted communication channels are mathematically and programmatically isolated from non-members. Non-members cannot discover, index, view metadata for, or inspect messages within private groups. Organization administrators and Super Administrators possess supervisory visibility solely in accordance with statutory compliance and institutional policy frameworks. Any administrative access, role elevation, or utilization of time-bounded emergency overrides (such as the SuperAdmin 2-Minute Force Message Override) is immutably recorded in the central compliance audit trail.',
     },
     {
       'id': '6',
       'title': '6. Zero Commercial Sale Warranty & Third-Party Disclosure Safeguards',
       'content':
-          'ConnectHub maintains an unconditional zero commercial sale policy. We do NOT sell, rent, lease, monetize, license, or trade any personal data, user communication records, contact lists, device telemetry, or browser signatures to third-party advertisers, data aggregators, or marketing brokers. Data processed within the platform is accessible strictly by your authorized organization administrators, authorized sub-processors maintaining dedicated cloud or on-premise infrastructure, and statutory law enforcement agencies strictly pursuant to lawful judicial process or formal statutory requests issued under the Information Technology Act, 2000.',
+          'KryinTalks maintains an unconditional zero commercial sale policy. We do NOT sell, rent, lease, monetize, license, or trade any personal data, user communication records, contact lists, device telemetry, or browser signatures to third-party advertisers, data aggregators, or marketing brokers. Data processed within the platform is accessible strictly by your authorized organization administrators, authorized sub-processors maintaining dedicated cloud or on-premise infrastructure, and statutory law enforcement agencies strictly pursuant to lawful judicial process or formal statutory requests issued under the Information Technology Act, 2000.',
     },
     {
       'id': '7',
       'title': '7. Information Security Architecture & Technical Safeguards',
       'content':
-          'ConnectHub implements comprehensive administrative, physical, and technical safeguards engineered to protect electronic data against unauthorized access, destruction, loss, alteration, or disclosure. All data in transit is protected using industry-standard Transport Layer Security (TLS 1.3/1.2). Passwords are cryptographically transformed using salted Argon2/bcrypt algorithms. Role boundaries are evaluated server-side at the API gateway layer prior to executing database queries. However, you acknowledge that no method of electronic storage or internet transmission is mathematically infallible, and the platform disclaims liability for security breaches occurring outside its direct infrastructure control.',
+          'KryinTalks implements comprehensive administrative, physical, and technical safeguards engineered to protect electronic data against unauthorized access, destruction, loss, alteration, or disclosure. All data in transit is protected using industry-standard Transport Layer Security (TLS 1.3/1.2). Passwords are cryptographically transformed using salted Argon2/bcrypt algorithms. Role boundaries are evaluated server-side at the API gateway layer prior to executing database queries. However, you acknowledge that no method of electronic storage or internet transmission is mathematically infallible, and the platform disclaims liability for security breaches occurring outside its direct infrastructure control.',
     },
     {
       'id': '8',
@@ -366,7 +366,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                           ),
                           const SizedBox(height: 6),
                           const Text(
-                            'This Privacy Policy details the technical and organizational mechanisms through which ConnectHub processes, stores, and protects organizational communications, device telemetry, and personal data. We adhere strictly to statutory privacy obligations with a permanent zero commercial sale guarantee.',
+                            'This Privacy Policy details the technical and organizational mechanisms through which KryinTalks processes, stores, and protects organizational communications, device telemetry, and personal data. We adhere strictly to statutory privacy obligations with a permanent zero commercial sale guarantee.',
                             style: TextStyle(fontSize: 13, height: 1.55, color: Color(0xFF44403C)),
                           ),
                         ],
@@ -433,7 +433,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                '© 2026 ConnectHub Technologies. All rights reserved.',
+                                '© 2026 KryinTalks Technologies. All rights reserved.',
                                 style: TextStyle(fontSize: 11.5, color: AppTheme.mutedText),
                               ),
                               if (widget.isModal)

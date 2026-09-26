@@ -17,7 +17,7 @@ class LegalTermsPage extends StatelessWidget {
         title: 'Terms of Service',
         eyebrow: 'KRYINTALK · PLATFORM RULES',
         summary:
-            'The agreement for using KryinTalk and participating in an approved workspace.',
+            'The agreement for using KryinTalks and participating in an approved workspace.',
         icon: LucideIcons.scale,
         sections: TermsScreen.accountSections,
         active: '/terms',
@@ -31,7 +31,7 @@ class LegalPrivacyPage extends StatelessWidget {
         title: 'Privacy Policy',
         eyebrow: 'KRYINTALK · YOUR DATA',
         summary:
-            'How KryinTalk handles account details, messages, files and security records.',
+            'How KryinTalks handles account details, messages, files and security records.',
         icon: LucideIcons.shield_check,
         sections: PrivacyPolicyScreen.accountSections,
         active: '/privacy',
@@ -84,7 +84,7 @@ class _LegalPageShellState extends State<LegalPageShell> {
             icon: const Icon(LucideIcons.arrow_left),
             onPressed: () =>
                 context.canPop() ? context.pop() : context.go('/login')),
-        title: const Text('KryinTalk',
+        title: const Text('KryinTalks',
             style: TextStyle(color: _ink, fontWeight: FontWeight.w800)),
         actions: [
           _nav(context, 'About', '/about'),
@@ -282,7 +282,7 @@ class _LegalPageShellState extends State<LegalPageShell> {
           alignment: WrapAlignment.spaceBetween,
           runSpacing: 14,
           children: [
-            const Text('KryinTalk · built by KryinLabs',
+            const Text('KryinTalks · built by KryinLabs',
                 style: TextStyle(
                     color: Colors.white, fontWeight: FontWeight.w700)),
             Wrap(spacing: 16, children: [
@@ -321,7 +321,7 @@ class LegalInfoPage extends StatelessWidget {
             active: '/acceptable-use',
             sections: [
               {
-                'title': 'Use KryinTalk for real collaboration',
+                'title': 'Use KryinTalks for real collaboration',
                 'content':
                     'Use the service for lawful communication, teamwork, file sharing and organization-approved work. Keep your account details accurate and protect your sign-in credentials.'
               },
@@ -353,12 +353,12 @@ class LegalInfoPage extends StatelessWidget {
               {
                 'title': 'Your content remains yours',
                 'content':
-                    'You or your organization keep ownership of messages, files, profile assets and other material you submit. KryinTalk receives only the limited permission needed to host, transmit, secure, display and back up that material for the service.'
+                    'You or your organization keep ownership of messages, files, profile assets and other material you submit. KryinTalks receives only the limited permission needed to host, transmit, secure, display and back up that material for the service.'
               },
               {
-                'title': 'KryinTalk and KryinLabs material',
+                'title': 'KryinTalks and KryinLabs material',
                 'content':
-                    'The KryinTalk name, brand, interface, software, documentation and original visual assets belong to KryinLabs or their licensors. Do not copy, resell or redistribute them without written permission.'
+                    'The KryinTalks name, brand, interface, software, documentation and original visual assets belong to KryinLabs or their licensors. Do not copy, resell or redistribute them without written permission.'
               },
               {
                 'title': 'Report infringement',
@@ -373,7 +373,7 @@ class LegalInfoPage extends StatelessWidget {
             ]);
       case 'contact':
         return const LegalPageShell(
-            title: 'Contact KryinTalk',
+            title: 'Contact KryinTalks',
             eyebrow: 'KRYINTALK · SUPPORT',
             summary:
                 'Choose the right path for account access, privacy, safety or copyright questions.',
@@ -403,7 +403,7 @@ class LegalInfoPage extends StatelessWidget {
             ]);
       default:
         return const LegalPageShell(
-            title: 'About KryinTalk',
+            title: 'About KryinTalks',
             eyebrow: 'KRYINTALK · KRYINLABS',
             summary:
                 'A focused communication space for approved teams and communities.',
@@ -413,7 +413,7 @@ class LegalInfoPage extends StatelessWidget {
               {
                 'title': 'A calmer place to work together',
                 'content':
-                    'KryinTalk brings conversations, groups, shared files and notifications into one private workspace. It is designed for teams that need clear communication and deliberate access control.'
+                    'KryinTalks brings conversations, groups, shared files and notifications into one private workspace. It is designed for teams that need clear communication and deliberate access control.'
               },
               {
                 'title': 'Access is intentional',
@@ -423,7 +423,7 @@ class LegalInfoPage extends StatelessWidget {
               {
                 'title': 'Built by KryinLabs',
                 'content':
-                    'KryinTalk is maintained by KryinLabs. Learn more at kryintalks.vercel.app or contact support@kryinlabs.com for product questions.'
+                    'KryinTalks is maintained by KryinLabs. Learn more at kryintalks.vercel.app or contact support@kryinlabs.com for product questions.'
               },
             ]);
     }

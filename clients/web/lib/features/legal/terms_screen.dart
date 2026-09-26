@@ -1,10 +1,10 @@
-/// ConnectHub — Terms of Service Screen & Modal.
+/// KryinTalks — Terms of Service Screen & Modal.
 ///
 /// Comprehensive enterprise Terms of Service and Platform Governance Agreement
 /// compliant with the Information Technology Act, 2000 (India), IT Intermediary
 /// Guidelines Rules 2021, and the Digital Personal Data Protection Act, 2023 (DPDPA).
 ///
-/// Designed in ConnectHub's signature Light Cream & Claymorphism Theme.
+/// Designed in KryinTalks's signature Light Cream & Claymorphism Theme.
 library;
 
 import 'package:flutter/material.dart';
@@ -54,19 +54,19 @@ class _TermsScreenState extends State<TermsScreen> {
       'id': '1',
       'title': '1. Acceptance of Terms, Corporate Governance & Scope of Agreement',
       'content':
-          'These Terms of Service ("Agreement", "Terms") constitute a legally binding contractual agreement between you ("User", "Subscriber", "Organization Representative") and the operators, developers, and hosting entities of the ConnectHub / Kryin-Talks platform ("Platform", "ConnectHub", "we", "our", "us"). By registering for an account, accessing the web portal, deploying desktop or mobile client packages (including Android APK binaries), or interacting with any connected Application Programming Interfaces (APIs), you explicitly acknowledge that you have read, understood, and consented to be bound by the entirety of these Terms. If you are entering into this Agreement on behalf of a corporate enterprise, educational institution, governmental body, or other legal entity, you represent and warrant that you possess full legal authority to bind such entity to these provisions. In the event you do not possess such legal authority, or if you do not unconditionally agree with any clause set forth herein, you must immediately cease all access to and use of the platform and its underlying communication services.',
+          'These Terms of Service ("Agreement", "Terms") constitute a legally binding contractual agreement between you ("User", "Subscriber", "Organization Representative") and the operators, developers, and hosting entities of the KryinTalks platform ("Platform", "KryinTalks", "we", "our", "us"). By registering for an account, accessing the web portal, deploying desktop or mobile client packages (including Android APK binaries), or interacting with any connected Application Programming Interfaces (APIs), you explicitly acknowledge that you have read, understood, and consented to be bound by the entirety of these Terms. If you are entering into this Agreement on behalf of a corporate enterprise, educational institution, governmental body, or other legal entity, you represent and warrant that you possess full legal authority to bind such entity to these provisions. In the event you do not possess such legal authority, or if you do not unconditionally agree with any clause set forth herein, you must immediately cease all access to and use of the platform and its underlying communication services.',
     },
     {
       'id': '2',
       'title': '2. User Account Registration, Identity Verification & Persistent Session Security',
       'content':
-          'To utilize ConnectHub, users must maintain valid enterprise credentials established through designated organization administrators or authorized self-registration workflows. You are solely responsible for safeguarding the confidentiality of your authentication identifiers, passwords, and cryptographic multi-factor credentials. When the "Keep me signed in" feature is activated upon authentication, the client application generates persistent JSON Web Token (JWT) Bearer access and refresh credentials stored locally on your physical hardware storage (including browser LocalStorage, IndexedDB subsystems, or mobile Android EncryptedSharedPreferences). These persistent tokens permit uninterrupted session continuity across application restarts and operating system reboots until explicit manual logout. You assume total responsibility and legal accountability for all transmissions, group communications, administrative configurations, and role modifications dispatched through sessions authenticated on your registered devices. You agree to notify organization administrators immediately upon discovering any unauthorized session access or hardware compromise.',
+          'To utilize KryinTalks, users must maintain valid enterprise credentials established through designated organization administrators or authorized self-registration workflows. You are solely responsible for safeguarding the confidentiality of your authentication identifiers, passwords, and cryptographic multi-factor credentials. When the "Keep me signed in" feature is activated upon authentication, the client application generates persistent JSON Web Token (JWT) Bearer access and refresh credentials stored locally on your physical hardware storage (including browser LocalStorage, IndexedDB subsystems, or mobile Android EncryptedSharedPreferences). These persistent tokens permit uninterrupted session continuity across application restarts and operating system reboots until explicit manual logout. You assume total responsibility and legal accountability for all transmissions, group communications, administrative configurations, and role modifications dispatched through sessions authenticated on your registered devices. You agree to notify organization administrators immediately upon discovering any unauthorized session access or hardware compromise.',
     },
     {
       'id': '3',
       'title': '3. Intermediary Status & Statutory Safe Harbor Protection (Section 79, IT Act, 2000)',
       'content':
-          'ConnectHub operates strictly and exclusively as an "Intermediary" as defined under Section 2(1)(w) and Section 79 of the Information Technology Act, 2000 of the Republic of India. The platform functions as a neutral, automated, technological infrastructure conduit designed solely for the transmission, temporary routing, and storage of electronic communications between authorized organization participants. ConnectHub and its operators: (a) do not initiate any electronic communication or transmission; (b) do not select or determine the receiver or recipient of any transmission; (c) do not modify, curate, or manipulate the textual, audio, graphical, or binary content contained in any transmission; and (d) do not exercise pre-emptive editorial screening or discretionary gatekeeping over user-generated communications. In accordance with Section 79(2)(a) and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, ConnectHub shall not be subject to any civil, criminal, or regulatory liability for any user-generated data, files, communications, links, or intellectual property hosted or transmitted via the platform.',
+          'KryinTalks operates strictly and exclusively as an "Intermediary" as defined under Section 2(1)(w) and Section 79 of the Information Technology Act, 2000 of the Republic of India. The platform functions as a neutral, automated, technological infrastructure conduit designed solely for the transmission, temporary routing, and storage of electronic communications between authorized organization participants. KryinTalks and its operators: (a) do not initiate any electronic communication or transmission; (b) do not select or determine the receiver or recipient of any transmission; (c) do not modify, curate, or manipulate the textual, audio, graphical, or binary content contained in any transmission; and (d) do not exercise pre-emptive editorial screening or discretionary gatekeeping over user-generated communications. In accordance with Section 79(2)(a) and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, KryinTalks shall not be subject to any civil, criminal, or regulatory liability for any user-generated data, files, communications, links, or intellectual property hosted or transmitted via the platform.',
     },
     {
       'id': '4',
@@ -90,19 +90,19 @@ class _TermsScreenState extends State<TermsScreen> {
       'id': '7',
       'title': '7. Customer Data Ownership, Intellectual Property & Software Licenses',
       'content':
-          'As between the user and ConnectHub, the organization and its authorized users retain all proprietary rights, ownership title, and copyright in all text messages, uploaded documents, multimedia files, attachments, and profile assets uploaded to the platform ("Customer Data"). You grant ConnectHub a non-exclusive, royalty-free, worldwide license solely to host, transmit, cache, index, and process Customer Data strictly to the extent necessary to deliver the real-time communications service. All underlying software code, database architectures, client user interfaces, graphic designs, trademarks, and documentation associated with ConnectHub are the exclusive proprietary intellectual property of the platform creators and are protected under Indian and international copyright and intellectual property treaties.',
+          'As between the user and KryinTalks, the organization and its authorized users retain all proprietary rights, ownership title, and copyright in all text messages, uploaded documents, multimedia files, attachments, and profile assets uploaded to the platform ("Customer Data"). You grant KryinTalks a non-exclusive, royalty-free, worldwide license solely to host, transmit, cache, index, and process Customer Data strictly to the extent necessary to deliver the real-time communications service. All underlying software code, database architectures, client user interfaces, graphic designs, trademarks, and documentation associated with KryinTalks are the exclusive proprietary intellectual property of the platform creators and are protected under Indian and international copyright and intellectual property treaties.',
     },
     {
       'id': '8',
       'title': '8. Indemnification & Legal Defense Obligations',
       'content':
-          'You agree to defend, indemnify, and hold harmless ConnectHub, its founding developers, hosting providers, affiliates, directors, officers, employees, and authorized agents from and against any and all legal claims, governmental investigations, regulatory penalties, liabilities, losses, damages, judgments, settlements, costs, and expenses (including reasonable attorney fees and legal costs) arising out of or related to: (a) your access to or utilization of the platform; (b) any content, communications, or files uploaded or transmitted through your authenticated user account; (c) your violation of any statutory provision, regulation, or third-party right; or (d) any breach of these Terms of Service.',
+          'You agree to defend, indemnify, and hold harmless KryinTalks, its founding developers, hosting providers, affiliates, directors, officers, employees, and authorized agents from and against any and all legal claims, governmental investigations, regulatory penalties, liabilities, losses, damages, judgments, settlements, costs, and expenses (including reasonable attorney fees and legal costs) arising out of or related to: (a) your access to or utilization of the platform; (b) any content, communications, or files uploaded or transmitted through your authenticated user account; (c) your violation of any statutory provision, regulation, or third-party right; or (d) any breach of these Terms of Service.',
     },
     {
       'id': '9',
       'title': '9. Service Modification, Account Deactivation & Data Lifecycle Management',
       'content':
-          'ConnectHub reserves the right to deploy updates, bug fixes, feature enhancements, or architectural modifications at any time with or without prior notification. Organization administrators retain the unilateral right to suspend, deactivate, or terminate user accounts within their corporate tenant. Upon account termination or organization workspace deletion, active session tokens are invalidated and user access revoked. Historical audit logs, system telemetry, and compliance records may be retained in encrypted archival stores for statutory compliance periods as mandated under applicable Indian and international regulations.',
+          'KryinTalks reserves the right to deploy updates, bug fixes, feature enhancements, or architectural modifications at any time with or without prior notification. Organization administrators retain the unilateral right to suspend, deactivate, or terminate user accounts within their corporate tenant. Upon account termination or organization workspace deletion, active session tokens are invalidated and user access revoked. Historical audit logs, system telemetry, and compliance records may be retained in encrypted archival stores for statutory compliance periods as mandated under applicable Indian and international regulations.',
     },
     {
       'id': '10',
@@ -351,7 +351,7 @@ class _TermsScreenState extends State<TermsScreen> {
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            'ConnectHub Enterprise Collaboration Agreement',
+                            'KryinTalks Enterprise Collaboration Agreement',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -360,7 +360,7 @@ class _TermsScreenState extends State<TermsScreen> {
                           ),
                           const SizedBox(height: 6),
                           const Text(
-                            'Please review this Agreement thoroughly prior to accessing or utilizing ConnectHub enterprise software services. This document delineates binding operational responsibilities, safe harbor statutory protections, multi-tier permissions, and limitation provisions governing institutional communication workloads.',
+                            'Please review this Agreement thoroughly prior to accessing or utilizing KryinTalks enterprise software services. This document delineates binding operational responsibilities, safe harbor statutory protections, multi-tier permissions, and limitation provisions governing institutional communication workloads.',
                             style: TextStyle(fontSize: 13, height: 1.55, color: Color(0xFF44403C)),
                           ),
                         ],
@@ -427,7 +427,7 @@ class _TermsScreenState extends State<TermsScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                '© 2026 ConnectHub Technologies. All rights reserved.',
+                                '© 2026 KryinTalks Technologies. All rights reserved.',
                                 style: TextStyle(fontSize: 11.5, color: AppTheme.mutedText),
                               ),
                               if (widget.isModal)
