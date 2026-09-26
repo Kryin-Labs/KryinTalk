@@ -128,6 +128,15 @@ class AuthService {
   Future<void> logout() async {
     SupabaseService.instance.invalidateConversationsCache();
     SupabaseService.instance.invalidateUsersCache();
+    if (SupabaseService.instance.hasSession) {
+      try {
+        await SupabaseService.instance.client
+            .from('users')
+            .update({'presence_status': 'offline'})
+            .eq('id', SupabaseService.instance.client.auth.currentUser!.id)
+            .timeout(const Duration(seconds: 2));
+      } catch (_) {}
+    }
     await _client.clearToken();
     try {
       if (SupabaseService.instance.hasSession)

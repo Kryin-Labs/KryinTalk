@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api_endpoints.dart';
 import 'bridge_routes.dart';
+import '../presence/presence_status.dart';
 import '../debug/debug_inspector.dart';
 import '../supabase/supabase_service.dart';
 import 'package:flutter/foundation.dart';
@@ -222,7 +223,8 @@ class _SupabaseBridgeInterceptor extends Interceptor {
         }
 
         if (method == 'GET' && path == '/admin/users') {
-          final profile = await SupabaseService.instance.getCurrentUserProfile();
+          final profile =
+              await SupabaseService.instance.getCurrentUserProfile();
           if (profile?['is_super_admin'] != true &&
               profile?['role'] != 'admin') {
             throw StateError('Administrator access is required.');
@@ -245,11 +247,18 @@ class _SupabaseBridgeInterceptor extends Interceptor {
               .toList();
           for (final user in users) {
             final codes = (results[2] as List)
-                .where((assignment) => key(assignment['user_id']) == key(user['id']))
+                .where((assignment) =>
+                    key(assignment['user_id']) == key(user['id']))
                 .map((assignment) => roleCodes[key(assignment['role_id'])])
                 .whereType<String>()
                 .toSet();
-            for (final code in ['super_admin', 'admin', 'manager', 'member', 'user']) {
+            for (final code in [
+              'super_admin',
+              'admin',
+              'manager',
+              'member',
+              'user'
+            ]) {
               if (codes.contains(code)) {
                 user['role'] = code;
                 break;
@@ -257,22 +266,39 @@ class _SupabaseBridgeInterceptor extends Interceptor {
             }
             user['is_super_admin'] = codes.contains('super_admin');
           }
-          return handler.resolve(Response(requestOptions: options,
-              statusCode: 200, data: {'items': users, 'total': users.length}));
+          return handler.resolve(Response(
+              requestOptions: options,
+              statusCode: 200,
+              data: {'items': users, 'total': users.length}));
         }
 
         if (method == 'GET' && path == '/admin/audit-logs') {
-          final rows = await SupabaseService.instance.client.from('audit_logs')
-              .select('id,user_id,action,resource_type,resource_id,details,changes,created_at')
-              .order('created_at', ascending: false).limit(200);
-          final action = options.queryParameters['action']?.toString().toLowerCase();
-          final resource = options.queryParameters['resource_type']?.toString().toLowerCase();
-          final logs = rows.where((row) =>
-              (action == null || row['action'].toString().toLowerCase().contains(action)) &&
-              (resource == null || row['resource_type'].toString().toLowerCase() == resource))
+          final rows = await SupabaseService.instance.client
+              .from('audit_logs')
+              .select(
+                  'id,user_id,action,resource_type,resource_id,details,changes,created_at')
+              .order('created_at', ascending: false)
+              .limit(200);
+          final action =
+              options.queryParameters['action']?.toString().toLowerCase();
+          final resource = options.queryParameters['resource_type']
+              ?.toString()
+              .toLowerCase();
+          final logs = rows
+              .where((row) =>
+                  (action == null ||
+                      row['action']
+                          .toString()
+                          .toLowerCase()
+                          .contains(action)) &&
+                  (resource == null ||
+                      row['resource_type'].toString().toLowerCase() ==
+                          resource))
               .toList();
-          return handler.resolve(Response(requestOptions: options,
-              statusCode: 200, data: {'items': logs, 'total': logs.length}));
+          return handler.resolve(Response(
+              requestOptions: options,
+              statusCode: 200,
+              data: {'items': logs, 'total': logs.length}));
         }
 
         final directoryUserMatch =
@@ -862,7 +888,7 @@ class _SupabaseBridgeInterceptor extends Interceptor {
             for (final u in users) {
               usersMap[u['id'].toString()] = {
                 ...Map<String, dynamic>.from(u),
-                'status': u['presence_status'],
+                'status': effectivePresenceStatus(Map<String, dynamic>.from(u)),
                 'last_seen_at': u['last_active_at'],
               };
             }
@@ -892,7 +918,9 @@ class _SupabaseBridgeInterceptor extends Interceptor {
         return handler.reject(DioException(
           requestOptions: options,
           type: DioExceptionType.unknown,
-          response: e is PostgrestException && e.code == '42501' ? Response(requestOptions:options,statusCode:403) : null,
+          response: e is PostgrestException && e.code == '42501'
+              ? Response(requestOptions: options, statusCode: 403)
+              : null,
           error: e,
           message: 'The request could not be completed. Please try again.',
         ));

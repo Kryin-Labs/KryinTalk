@@ -301,6 +301,7 @@ class _FriendsScreenState extends ConsumerState<FriendsScreen>
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(presenceProvider);
     final theme = Theme.of(context);
 
     final friendUsers = _allUsers

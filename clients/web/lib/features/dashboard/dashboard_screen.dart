@@ -971,6 +971,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
     final currentUserId = authState.userId;
+    ref.watch(presenceProvider);
     final presenceNotifier = ref.read(presenceProvider.notifier);
 
     if (_isLoading) {

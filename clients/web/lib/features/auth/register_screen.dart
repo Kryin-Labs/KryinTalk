@@ -66,7 +66,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           String? helper,
           int? maxLength}) =>
       Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 12),
           child: TextFormField(
               key: ValueKey('register-' + id),
               autovalidateMode: AutovalidateMode.onUnfocus,
@@ -127,9 +127,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       : null)));
   @override
   Widget build(BuildContext context) => AuthLayout(
-      title: 'Create your KryinTalk account',
+      title: 'Create your account',
+      switchLabel: 'Sign in',
+      onSwitch: _busy ? null : () => context.go('/login'),
       subtitle:
-          'Confirm your email, then get access from an admin or use an invite code.',
+          'Get started with KryinTalk. Confirm your email, then request access.',
       child: AutofillGroup(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -143,12 +145,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         _field('password', _password, 'Password', password: true),
         Container(
             padding: const EdgeInsets.all(14),
-            margin: const EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
-                color: Theme.of(context)
-                    .colorScheme
-                    .primary
-                    .withValues(alpha: .06),
+                color: AuthLayout.blue.withValues(alpha: .06),
                 borderRadius: BorderRadius.circular(12)),
             child: Column(children: [
               _requirement('At least 8 characters', _password.text.length >= 8),
@@ -176,14 +175,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         const Text(
             'Confirm your email, then request access or enter a code from an admin.',
             textAlign: TextAlign.center),
-        TextButton(
-            onPressed: _busy ? null : () => context.go('/login'),
-            child: const Text('Already have an account? Sign in')),
       ])));
   Widget _requirement(String label, bool met) => Row(children: [
         Icon(met ? Icons.check_circle_outline : Icons.circle_outlined,
-            size: 18,
-            color: met ? Theme.of(context).colorScheme.primary : null),
+            size: 18, color: met ? AuthLayout.blue : null),
         const SizedBox(width: 8),
         Expanded(child: Text(label))
       ]);

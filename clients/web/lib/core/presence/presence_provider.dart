@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_client.dart';
+import 'presence_status.dart';
 import '../api/api_endpoints.dart';
 import '../auth/auth_provider.dart';
 
@@ -47,7 +48,8 @@ class PresenceNotifier extends StateNotifier<PresenceState> {
 
     // Listen for auth state changes to start/stop presence tracking
     _ref.listen<AuthState>(authProvider, (previous, authState) {
-      if (previous?.userId != authState.userId || previous?.hasAppAccess != authState.hasAppAccess) stopTracking();
+      if (previous?.userId != authState.userId ||
+          previous?.hasAppAccess != authState.hasAppAccess) stopTracking();
       if (authState.hasAppAccess) {
         startTracking();
       } else {
@@ -65,7 +67,9 @@ class PresenceNotifier extends StateNotifier<PresenceState> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final saved = prefs.getString('custom_user_presence_status') ?? 'online';
+      if (!mounted) return;
       state = state.copyWith(myStatus: saved);
+      if (state.isTracking) sendHeartbeat();
     } catch (_) {}
   }
 
@@ -95,7 +99,7 @@ class PresenceNotifier extends StateNotifier<PresenceState> {
     _fetchTimer?.cancel();
     _heartbeatTimer = null;
     _fetchTimer = null;
-    state = const PresenceState();
+    state = PresenceState(myStatus: state.myStatus);
   }
 
   Future<void> setCustomStatus(String newStatus) async {
@@ -137,7 +141,9 @@ class PresenceNotifier extends StateNotifier<PresenceState> {
       if (!auth.hasAppAccess) return;
       final api = _ref.read(apiClientProvider);
       final response = await api.dio.get(ApiEndpoints.presenceMap);
-      if (!mounted || !_ref.read(authProvider).hasAppAccess || _ref.read(authProvider).userId != auth.userId) return;
+      if (!mounted ||
+          !_ref.read(authProvider).hasAppAccess ||
+          _ref.read(authProvider).userId != auth.userId) return;
       final data = response.data;
 
       if (data is Map && data.containsKey('users')) {
@@ -153,6 +159,8 @@ class PresenceNotifier extends StateNotifier<PresenceState> {
         }
       }
     } catch (e) {
+      if (mounted && state.isTracking)
+        state = state.copyWith(users: Map.of(state.users));
       debugPrint('[Presence] Sync failed: $e');
     }
   }
@@ -160,22 +168,25 @@ class PresenceNotifier extends StateNotifier<PresenceState> {
   bool isOnline(String? userId) {
     if (userId == null || userId.isEmpty) return false;
     final currentUserId = _ref.read(authProvider).userId;
-    if (userId == currentUserId) return true; // Current user is active
+    if (userId == currentUserId)
+      return state.isTracking &&
+          _ref.read(authProvider).hasAppAccess &&
+          state.myStatus != 'offline';
 
     final u = state.users[userId];
     if (u == null) return false;
-    final status = u['status']?.toString();
-    return status != null && status != 'offline';
+    return effectivePresenceStatus(u) != 'offline';
   }
 
   String getUserStatus(String? userId) {
     if (userId == null || userId.isEmpty) return 'offline';
     final currentUserId = _ref.read(authProvider).userId;
-    if (userId == currentUserId) return state.myStatus;
+    if (userId == currentUserId)
+      return isOnline(userId) ? state.myStatus : 'offline';
 
     final u = state.users[userId];
     if (u == null) return 'offline';
-    return u['status']?.toString() ?? 'offline';
+    return effectivePresenceStatus(u);
   }
 
   Color getStatusColor(String status) {
@@ -204,12 +215,14 @@ class PresenceNotifier extends StateNotifier<PresenceState> {
     if (userId == null || userId.isEmpty) return 'Offline';
     final currentUserId = _ref.read(authProvider).userId;
     if (userId == currentUserId)
-      return 'Online (${state.myStatus.toUpperCase()})';
+      return isOnline(userId)
+          ? 'Online (${state.myStatus.toUpperCase()})'
+          : 'Offline';
 
     final u = state.users[userId];
     if (u == null) return 'Offline';
-    final status = u['status']?.toString();
-    if (status != null && status != 'offline') {
+    final status = effectivePresenceStatus(u);
+    if (status != 'offline') {
       return status.toUpperCase();
     }
 

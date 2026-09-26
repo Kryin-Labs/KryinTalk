@@ -137,6 +137,24 @@ void main() {
           isFalse);
     });
   }
+  testWidgets(
+      'desktop auth uses blue KryinTalk theme and split conversation panel',
+      (tester) async {
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    for (final screen in [const LoginScreen(), const RegisterScreen()]) {
+      await show(tester, screen, FakeAuth());
+      expect(find.text('Bring your conversations\ntogether.'), findsOneWidget);
+      final submit = find.byKey(
+          ValueKey(screen is LoginScreen ? 'login-submit' : 'register-submit'));
+      expect(Theme.of(tester.element(submit)).colorScheme.primary,
+          const Color(0xFF4779FF));
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+    }
+  });
   for (final width in [360.0, 768.0, 1440.0]) {
     for (final dark in [false, true]) {
       testWidgets('forms fit width $width dark $dark at large text',

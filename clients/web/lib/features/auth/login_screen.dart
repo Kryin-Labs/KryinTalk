@@ -42,6 +42,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final auth = ref.watch(authProvider);
     return AuthLayout(
         title: 'Welcome back',
+        switchLabel: 'Create account',
+        onSwitch: _busy ? null : () => context.go('/register'),
         subtitle: 'Sign in with your email to continue to KryinTalk.',
         child: AutofillGroup(
             child: Column(
@@ -60,7 +62,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   decoration: const InputDecoration(labelText: 'Email address'),
                   onChanged: (_) => setState(() {}),
                   textInputAction: TextInputAction.next),
-              const SizedBox(height: 20),
+              const SizedBox(height: 14),
               TextFormField(
                   key: const ValueKey('login-password'),
                   controller: _password,
@@ -108,9 +110,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     'Complete the fields and accept the agreement to sign in.',
                     textAlign: TextAlign.center),
               const SizedBox(height: 12),
-              TextButton(
-                  onPressed: _busy ? null : () => context.go('/register'),
-                  child: const Text('Create account')),
             ])));
   }
 }

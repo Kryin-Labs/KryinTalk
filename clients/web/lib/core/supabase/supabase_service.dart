@@ -5,6 +5,7 @@
 library;
 
 import 'dart:async';
+import '../presence/presence_status.dart';
 import '../auth/callback_history.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -306,7 +307,7 @@ class SupabaseService {
       final data = await client
           .from('users')
           .select(
-              'id, username, display_name, email, avatar_url, presence_status, last_login_at')
+              'id, username, display_name, email, avatar_url, presence_status, last_active_at, last_login_at')
           .isFilter('deleted_at', null)
           .order('display_name');
       final list = List<Map<String, dynamic>>.from(data);
@@ -347,7 +348,7 @@ class SupabaseService {
     final result = await client
         .from('users')
         .select(
-            'id, username, display_name, email, avatar_url, presence_status, last_login_at')
+            'id, username, display_name, email, avatar_url, presence_status, last_active_at, last_login_at')
         .eq('id', normalizedId)
         .isFilter('deleted_at', null)
         .maybeSingle();
@@ -465,9 +466,8 @@ class SupabaseService {
         final recipientAvatar = otherUser != null
             ? (otherUser['avatar_url']?.toString() ?? '')
             : '';
-        final recipientPresence = otherUser != null
-            ? (otherUser['presence_status']?.toString() ?? 'offline')
-            : 'offline';
+        final recipientPresence =
+            otherUser != null ? effectivePresenceStatus(otherUser) : 'offline';
 
         Map<String, dynamic>? enrichedLastMsg;
         if (lastMsg != null) {

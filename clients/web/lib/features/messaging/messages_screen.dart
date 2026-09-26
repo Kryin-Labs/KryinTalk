@@ -2928,10 +2928,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
     final currentUserId = ref.read(authProvider).userId?.toString();
     final blockedByMe = relationshipStatus == 'blocked' &&
         relationship?['blocked_by']?.toString() == currentUserId;
-    final presenceLabel = (user['presence_status'] ?? user['status'])
-            ?.toString()
-            .replaceAll('_', ' ') ??
-        (isOnline ? 'Online' : 'Offline');
+    final presenceLabel = ref.read(presenceProvider.notifier).getUserStatus(userId).replaceAll('_',' ');
     final customStatus = user['custom_status']?.toString();
     final about = user['about']?.toString() ?? user['bio']?.toString();
     final organizationLabels = <String>[
@@ -4763,6 +4760,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(presenceProvider);
     final screenWidth = MediaQuery.sizeOf(context).width;
     final isMobile = screenWidth < 768;
 
